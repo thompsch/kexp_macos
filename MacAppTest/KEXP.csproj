@@ -99,6 +99,12 @@
 		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 3.png" />
 		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 2.png" />
 		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 1.png" />
+		<ImageAsset Include="Assets.xcassets\Unmuted.imageset\Contents.json" />
+		<ImageAsset Include="Assets.xcassets\Muted.imageset\Contents.json" />
+		<ImageAsset Include="Assets.xcassets\refresh.imageset\Contents.json" />
+		<ImageAsset Include="Assets.xcassets\refresh.imageset\refresh.png" />
+		<ImageAsset Include="Assets.xcassets\Unmuted.imageset\speaker-128.png" />
+		<ImageAsset Include="Assets.xcassets\Muted.imageset\mute-2-128.png" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Resources\" />

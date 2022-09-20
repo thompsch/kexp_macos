@@ -8,8 +8,7 @@ namespace KEXP
 {
     public partial class ViewController : NSViewController
     {
-        int volume = 0;
-
+        private int volume = 0;
         NSStatusItem item;
         NSStatusBar statusBar;
         NSMenuItem mute;
@@ -23,7 +22,6 @@ namespace KEXP
             set
             {
                 base.RepresentedObject = value;
-                // Update the view, if already loaded.
             }
         }
 
@@ -35,22 +33,19 @@ namespace KEXP
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
             var url = new NSUrl("https://kexp.org");
             var request = new NSUrlRequest(url);
             webView.LoadRequest(request);
-
 
             statusBar = NSStatusBar.SystemStatusBar;
             item = statusBar.CreateStatusItem(NSStatusItemLength.Variable);
             item.Title = "KEXP";
             item.HighlightMode = true;
             item.Menu = new NSMenu();
-
             mute = new NSMenuItem("Mute");
             mute.Activated += Mute_Activated;
-
             item.Menu.AddItem(mute);
+            btnUnmute.Hidden = true;
         }
 
         private void Mute_Activated(object sender, EventArgs e)
@@ -58,12 +53,17 @@ namespace KEXP
             MuteUnMute();
         }
 
-        partial void refresh(Foundation.NSObject nSObject)
+        partial void btnRefresh_clicked(Foundation.NSObject nSObject)
         {
             webView.Reload();
         }
 
-        partial void muteClicked(Foundation.NSObject nSObject)
+        partial void btnMute_clicked(Foundation.NSObject nSObject)
+        {
+            MuteUnMute();
+        }
+
+        partial void btnUnmute_clicked(NSObject sender)
         {
             MuteUnMute();
         }
@@ -71,25 +71,22 @@ namespace KEXP
         public void MuteUnMute()
         {
             webView.CallAsyncJavaScript
-                ($"document.querySelectorAll('video, audio').forEach(mediaElement => mediaElement.volume = {volume})"
-                , null, null, WKContentWorld.DefaultClient, null);
+                ($"document.querySelectorAll('video, audio').forEach(mediaElement => mediaElement.volume = {volume})",
+                null, null, WKContentWorld.DefaultClient, null);
 
             volume = volume == 0 ? 1 : 0;
             if (volume == 0)
             {
-                muteTextChanged.Title = "Mute";
-                muteTextChanged.BackgroundColor = NSColor.Blue;
                 mute.Title = "Mute";
-                webView.AddSubview(muteTextChanged.ControlView);
+                btnUnmute.Hidden = true;
+                btnMute.Hidden = false;
             }
             else
             {
-                muteTextChanged.Title = "Unmute";
-                muteTextChanged.BackgroundColor = NSColor.Red;
                 mute.Title = "Unmute";
+                btnUnmute.Hidden = false;
+                btnMute.Hidden = true;
             }
-
-
         }
     }
 }

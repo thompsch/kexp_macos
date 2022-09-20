@@ -13,32 +13,53 @@ namespace KEXP
     partial class ViewController
     {
         [Outlet]
-        AppKit.NSButtonCell muteTextChanged { get; set; }
+        AppKit.NSButton btnMute { get; set; }
+
+        [Outlet]
+        AppKit.NSButton btnRefresh { get; set; }
+
+        [Outlet]
+        AppKit.NSButton btnUnmute { get; set; }
 
         [Outlet]
         WebKit.WKWebView webView { get; set; }
 
-        [Action("muteClicked:")]
-        partial void muteClicked(Foundation.NSObject sender);
+        [Action("btnMute_clicked:")]
+        partial void btnMute_clicked(Foundation.NSObject sender);
 
-        [Action("muteText:")]
-        partial void muteText(Foundation.NSObject sender);
+        [Action("btnRefresh_clicked:")]
+        partial void btnRefresh_clicked(Foundation.NSObject sender);
 
-        [Action("refresh:")]
-        partial void refresh(Foundation.NSObject sender);
+        [Action("btnUnmute_click:")]
+        partial void btnUnmute_click(Foundation.NSObject sender);
+
+        [Action("btnUnmute_clicked:")]
+        partial void btnUnmute_clicked(Foundation.NSObject sender);
 
         void ReleaseDesignerOutlets()
         {
-            if (muteTextChanged != null)
-            {
-                muteTextChanged.Dispose();
-                muteTextChanged = null;
-            }
-
             if (webView != null)
             {
                 webView.Dispose();
                 webView = null;
+            }
+
+            if (btnMute != null)
+            {
+                btnMute.Dispose();
+                btnMute = null;
+            }
+
+            if (btnUnmute != null)
+            {
+                btnUnmute.Dispose();
+                btnUnmute = null;
+            }
+
+            if (btnRefresh != null)
+            {
+                btnRefresh.Dispose();
+                btnRefresh = null;
             }
         }
     }
