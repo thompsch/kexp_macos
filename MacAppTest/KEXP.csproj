@@ -74,13 +74,13 @@
 		  <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
 		</Reference>
 		<Reference Include="System.Memory">
-		  <HintPath>..\packages\System.Memory.4.5.4\lib\netstandard2.0\System.Memory.dll</HintPath>
+		  <HintPath>..\packages\System.Memory.4.5.5\lib\netstandard2.0\System.Memory.dll</HintPath>
 		</Reference>
 		<Reference Include="System.Text.Encodings.Web">
 		  <HintPath>..\packages\System.Text.Encodings.Web.6.0.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
 		</Reference>
 		<Reference Include="System.Text.Json">
-		  <HintPath>..\packages\System.Text.Json.6.0.0\lib\netstandard2.0\System.Text.Json.dll</HintPath>
+		  <HintPath>..\packages\System.Text.Json.6.0.6\lib\netstandard2.0\System.Text.Json.dll</HintPath>
 		</Reference>
 		<Reference Include="System.Net.Http.Json">
 		  <HintPath>..\packages\System.Net.Http.Json.6.0.0\lib\netstandard2.0\System.Net.Http.Json.dll</HintPath>
@@ -102,9 +102,9 @@
 		<ImageAsset Include="Assets.xcassets\Unmuted.imageset\Contents.json" />
 		<ImageAsset Include="Assets.xcassets\Muted.imageset\Contents.json" />
 		<ImageAsset Include="Assets.xcassets\refresh.imageset\Contents.json" />
-		<ImageAsset Include="Assets.xcassets\refresh.imageset\refresh.png" />
 		<ImageAsset Include="Assets.xcassets\Unmuted.imageset\speaker-128.png" />
 		<ImageAsset Include="Assets.xcassets\Muted.imageset\mute-2-128.png" />
+		<ImageAsset Include="Assets.xcassets\refresh.imageset\arrow_refresh.png" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Resources\" />
@@ -127,5 +127,5 @@
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 	<Import Project="..\packages\Xamarin.Forms.5.0.0.2515\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.5.0.0.2515\build\Xamarin.Forms.targets')" />
-	<Import Project="..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />
+	<Import Project="..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets')" />
 </Project>

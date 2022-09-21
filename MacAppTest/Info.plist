@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleName</key>
-	<string>${AppName}</string>
+	<string>KEXP</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.ca13b.kexp</string>
 	<key>CFBundleShortVersionString</key>
