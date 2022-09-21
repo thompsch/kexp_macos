@@ -133,18 +133,15 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="rtc-Ic-npW"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" drawsBackground="YES" id="IxV-FT-E1N">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" borderStyle="bezel" alignment="center" drawsBackground="YES" id="IxV-FT-E1N">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwS-3M-A9X" userLabel="btnMute">
-                                <rect key="frame" x="228" y="240" width="24" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="Fh7-W4-riz"/>
-                                    <constraint firstAttribute="width" constant="24" id="gWN-2g-qAL"/>
-                                </constraints>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwS-3M-A9X" userLabel="btnMute">
+                                <rect key="frame" x="49" y="238" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Unmuted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="3YL-oS-qhL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -153,30 +150,19 @@
                                     <action selector="btnMute_clicked:" target="XfG-lQ-9wD" id="LHX-bG-kAu"/>
                                 </connections>
                             </button>
-                            <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xK1-4M-VyQ" userLabel="webView">
-                                <rect key="frame" x="0.0" y="0.0" width="476" height="232"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xK1-4M-VyQ" userLabel="webView">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="234"/>
                                 <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" audio="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0sV-30-sm3" userLabel="btnUnmute">
-                                <rect key="frame" x="228" y="240" width="24" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="6Sa-l2-W4B"/>
-                                    <constraint firstAttribute="width" constant="24" id="SVo-SM-cbH"/>
-                                </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Muted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="NgM-q8-zg7">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="btnUnmute_clicked:" target="XfG-lQ-9wD" id="TJX-Jo-L8u"/>
-                                </connections>
-                            </button>
                             <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2In-Dr-tg6" userLabel="btnRefresh">
-                                <rect key="frame" x="6" y="236" width="32" height="32"/>
+                                <rect key="frame" x="7" y="236" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="PXr-Z4-hdk"/>
+                                    <constraint firstAttribute="height" constant="24" id="TQy-Vc-cMR"/>
+                                </constraints>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="refresh" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Bzf-Zo-YTJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -185,21 +171,35 @@
                                     <action selector="btnRefresh_clicked:" target="XfG-lQ-9wD" id="SI4-Ss-iId"/>
                                 </connections>
                             </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0sV-30-sm3" userLabel="btnUnmute">
+                                <rect key="frame" x="49" y="238" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Muted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="NgM-q8-zg7">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="btnUnmute_clicked:" target="XfG-lQ-9wD" id="TJX-Jo-L8u"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="xK1-4M-VyQ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="GIt-Uc-h9C"/>
                             <constraint firstItem="2In-Dr-tg6" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="6" id="SrA-f0-paO"/>
                             <constraint firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="WCt-FU-Ndj"/>
+                            <constraint firstAttribute="trailing" secondItem="xK1-4M-VyQ" secondAttribute="trailing" id="WDB-tW-9fu"/>
                             <constraint firstItem="2In-Dr-tg6" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="6" id="YHx-PZ-nng"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="aBU-Tl-jcV"/>
-                            <constraint firstItem="kwS-3M-A9X" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="6" id="jZe-dy-JEv"/>
-                            <constraint firstItem="0sV-30-sm3" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="6" id="uRq-kw-y8M"/>
+                            <constraint firstItem="xK1-4M-VyQ" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="bottom" id="drR-g5-fsW"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="yJg-nn-XMr"/>
+                            <constraint firstAttribute="bottom" secondItem="xK1-4M-VyQ" secondAttribute="bottom" id="zlZ-1M-2bO"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btnMute" destination="kwS-3M-A9X" id="cZA-UW-QTu"/>
                         <outlet property="btnRefresh" destination="2In-Dr-tg6" id="ruO-BA-DV7"/>
                         <outlet property="btnUnmute" destination="0sV-30-sm3" id="lB6-Sj-ldX"/>
+                        <outlet property="titleBar" destination="HvE-bh-Stm" id="vgQ-h1-1UT"/>
                         <outlet property="webView" destination="xK1-4M-VyQ" id="YAv-Bt-tnp"/>
                     </connections>
                 </viewController>
@@ -209,7 +209,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Muted" width="128" height="128"/>
+        <image name="Muted" width="48" height="48"/>
         <image name="Unmuted" width="128" height="128"/>
         <image name="refresh" width="32" height="32"/>
     </resources>

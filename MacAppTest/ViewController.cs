@@ -91,6 +91,8 @@ namespace KEXP
             InvokeOnMainThread(() =>
             {
                 songInfo.Title = currentSong;
+
+                titleBar.StringValue = currentSong;
             });
         }
 

@@ -22,6 +22,9 @@ namespace KEXP
         AppKit.NSButton btnUnmute { get; set; }
 
         [Outlet]
+        AppKit.NSTextField titleBar { get; set; }
+
+        [Outlet]
         WebKit.WKWebView webView { get; set; }
 
         [Action("btnMute_clicked:")]
@@ -38,16 +41,16 @@ namespace KEXP
 
         void ReleaseDesignerOutlets()
         {
-            if (webView != null)
-            {
-                webView.Dispose();
-                webView = null;
-            }
-
             if (btnMute != null)
             {
                 btnMute.Dispose();
                 btnMute = null;
+            }
+
+            if (btnRefresh != null)
+            {
+                btnRefresh.Dispose();
+                btnRefresh = null;
             }
 
             if (btnUnmute != null)
@@ -56,10 +59,16 @@ namespace KEXP
                 btnUnmute = null;
             }
 
-            if (btnRefresh != null)
+            if (webView != null)
             {
-                btnRefresh.Dispose();
-                btnRefresh = null;
+                webView.Dispose();
+                webView = null;
+            }
+
+            if (titleBar != null)
+            {
+                titleBar.Dispose();
+                titleBar = null;
             }
         }
     }
