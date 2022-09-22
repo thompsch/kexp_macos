@@ -89,7 +89,7 @@
 		</Reference>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="MongoDB.Bson">
-		  <HintPath>..\packages\MongoDB.Bson.2.11.3\lib\netstandard2.0\MongoDB.Bson.dll</HintPath>
+		  <HintPath>..\packages\MongoDB.Bson.2.17.1\lib\netstandard2.1\MongoDB.Bson.dll</HintPath>
 		</Reference>
 		<Reference Include="Remotion.Linq">
 		  <HintPath>..\packages\Remotion.Linq.2.2.0\lib\portable-net45+win+wpa81+wp80\Remotion.Linq.dll</HintPath>
@@ -119,6 +119,10 @@
 		<ImageAsset Include="Assets.xcassets\Unmuted.imageset\speaker %281%29.png" />
 		<ImageAsset Include="Assets.xcassets\menu_icon.imageset\Contents.json" />
 		<ImageAsset Include="Assets.xcassets\menu_icon.imageset\kexp_icon_small.png" />
+		<ImageAsset Include="Assets.xcassets\favorite_filled.imageset\Contents.json" />
+		<ImageAsset Include="Assets.xcassets\favorite_filled.imageset\star_yellow.png" />
+		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\Contents.json" />
+		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\star_open.png" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Resources\" />

@@ -9,7 +9,5 @@ namespace KEXP
             NSApplication.Init();
             NSApplication.Main(args);
         }
-
-
     }
 }

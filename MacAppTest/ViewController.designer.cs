@@ -19,7 +19,13 @@ namespace KEXP
         AppKit.NSButton btnRefresh { get; set; }
 
         [Outlet]
+        AppKit.NSButton btnSaveFavorite { get; set; }
+
+        [Outlet]
         AppKit.NSButton btnUnmute { get; set; }
+
+        [Outlet]
+        AppKit.NSButton btnUnsaveFavorite { get; set; }
 
         [Outlet]
         AppKit.NSTextField titleBar { get; set; }
@@ -39,8 +45,26 @@ namespace KEXP
         [Action("btnUnmute_clicked:")]
         partial void btnUnmute_clicked(Foundation.NSObject sender);
 
+        [Action("favorite_save:")]
+        partial void favorite_save(Foundation.NSObject sender);
+
+        [Action("favorite_unsave:")]
+        partial void favorite_unsave(Foundation.NSObject sender);
+
+        [Action("save_favorite:")]
+        partial void save_favorite(Foundation.NSObject sender);
+
+        [Action("unsaveFavorite:")]
+        partial void unsave_favorite(Foundation.NSObject sender);
+
         void ReleaseDesignerOutlets()
         {
+            if (btnSaveFavorite != null)
+            {
+                btnSaveFavorite.Dispose();
+                btnSaveFavorite = null;
+            }
+
             if (btnMute != null)
             {
                 btnMute.Dispose();
@@ -53,22 +77,28 @@ namespace KEXP
                 btnRefresh = null;
             }
 
+            if (btnUnsaveFavorite != null)
+            {
+                btnUnsaveFavorite.Dispose();
+                btnUnsaveFavorite = null;
+            }
+
             if (btnUnmute != null)
             {
                 btnUnmute.Dispose();
                 btnUnmute = null;
             }
 
-            if (webView != null)
-            {
-                webView.Dispose();
-                webView = null;
-            }
-
             if (titleBar != null)
             {
                 titleBar.Dispose();
                 titleBar = null;
+            }
+
+            if (webView != null)
+            {
+                webView.Dispose();
+                webView = null;
             }
         }
     }

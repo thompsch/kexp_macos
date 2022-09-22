@@ -26,8 +26,10 @@ namespace KEXP
         NSMenuItem mute;
         NSMenuItem songInfo;
         NSMenuItem recentMenu;
+        NSMenuItem manage;
 
         Realm realm;
+        User user;
 
         Song CurrentSong;
         string currentSongString = "Loading...";
@@ -48,17 +50,40 @@ namespace KEXP
         {
 
         }
-
+        public override void ViewDidDisappear()
+        {
+            base.ViewDidDisappear();
+            NSApplication.SharedApplication.Terminate(this);
+        }
         public async override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            btnUnsaveFavorite.Hidden = true;
 
+            await DoRealmStuff();
 
-            // REALM
+            CurrentSong = new Song()
+            {
+                UserId = user.Id
+            };
 
+            var url = new NSUrl("https://kexp.org");
+            var request = new NSUrlRequest(url);
+            webView.LoadRequest(request);
 
+            SetUpStatusMenu();
+            GetCurrentSong();
+
+            Timer timer = new Timer(10000);
+            timer.Elapsed += timer_Elapsed;
+            timer.AutoReset = true;
+            timer.Enabled = true;
+        }
+
+        private async Task DoRealmStuff()
+        {
             var app = App.Create("kexpsongs-pnevf");
-            User user = await app.LogInAsync(
+            user = await app.LogInAsync(
                 Credentials.ApiKey("rCpFIckLbKhL83IcOebQLv8KBfK9LCn0gBaAQDEWK0bkFA6RwwkbD8AKnPwZ7qCv"));
 
             var config = new FlexibleSyncConfiguration(app.CurrentUser)
@@ -71,23 +96,6 @@ namespace KEXP
             };
 
             realm = await Realm.GetInstanceAsync(config);
-
-            // END REALM
-
-            CurrentSong = new Song();
-            CurrentSong.UserId = user.Id;
-
-            var url = new NSUrl("https://kexp.org");
-            var request = new NSUrlRequest(url);
-            webView.LoadRequest(request);
-
-            SetUpStatusMenu();
-
-
-            Timer timer = new Timer(10000);
-            timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = true;
-            timer.Enabled = true;
         }
 
         private void SetUpStatusMenu()
@@ -106,26 +114,36 @@ namespace KEXP
             item.Menu.AddItem(mute);
             btnUnmute.Hidden = true;
 
+
             songInfo = new NSMenuItem(currentSongString);
             songInfo.Enabled = true;
             songInfo.Submenu = new NSMenu();
 
-            var remember = new NSMenuItem("Remember this song");
+            var remember = new NSMenuItem("Add to Favorites");
             remember.Activated += Remember_Activated;
             songInfo.Submenu.AddItem(remember);
             item.Menu.AddItem(songInfo);
 
             recentMenu = new NSMenuItem("Recently Saved Songs");
-            //recentMenu.Activated += Recent_Activated;
             recentMenu.Submenu = new NSMenu();
+            manage = new NSMenuItem("Manage Favorites...");
+            manage.Activated += Manage_Activated;
+            recentMenu.Submenu.AddItem(manage);
+
             UpdateRecentList();
             item.Menu.AddItem(recentMenu);
         }
 
+        private void Manage_Activated(object sender, EventArgs e)
+        {
+            //TODO: new UI????
+            // throw new NotImplementedException();
+        }
+
         private void UpdateRecentList()
         {
-            //clear existing list
-            recentMenu.Submenu = new NSMenu();
+            recentMenu.Submenu.RemoveAllItems();
+            recentMenu.Submenu.AddItem(manage);
 
             var recentsongs = realm.All<Song>()
                 .OrderByDescending(s => s.AirTime)
@@ -142,22 +160,46 @@ namespace KEXP
 
         private void Remember_Activated(object sender, EventArgs e)
         {
-            if (CurrentSong.Title == null)
+            FavoriteOrNot(true);
+        }
+
+        private void FavoriteOrNot(bool save)
+        {
+            if (CurrentSong == null || CurrentSong.Title == null)
             {
                 return;
             }
-
-            realm.Write(() =>
+            if (save)
             {
-                realm.Add<Song>(CurrentSong);
-            });
+                realm.Write(() =>
+                {
+                    realm.Add<Song>(CurrentSong);
+                });
 
-            UpdateRecentList();
+                UpdateRecentList();
+                btnSaveFavorite.Hidden = true;
+                btnUnsaveFavorite.Hidden = false;
+            }
+            else
+            {
+                if (realm.Find<Song>(CurrentSong.Id) != null)
+                {
+                    realm.Write(() =>
+                    {
+                        realm.Remove(CurrentSong);
+                    });
+                }
+                UpdateRecentList();
+                GetCurrentSong();
+                btnSaveFavorite.Hidden = false;
+                btnUnsaveFavorite.Hidden = true;
+            }
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+
+
+        private void GetCurrentSong()
         {
-            // Get current song & artist
             var request = WebRequest.CreateHttp("https://api.kexp.org/v2/plays/?limit=1");
             request.ContentType = "application/json";
             var response = request.GetResponse();
@@ -168,9 +210,27 @@ namespace KEXP
                 var body = reader.ReadToEnd();
                 var jd = JsonSerializer.Deserialize<JsonSong>(body);
                 var song = jd.results[0];
+                if (!CurrentSong.IsValid)
+                {
+                    CurrentSong = new Song()
+                    {
+                        UserId = user.Id,
+                    };
+                }
 
-                CurrentSong.Title = song.song;
-                CurrentSong.Artist = song.artist;
+                if (CurrentSong.Title == song.song && CurrentSong.Artist == song.artist)
+                {
+                    return;
+                }
+                btnSaveFavorite.Hidden = false;
+                btnUnsaveFavorite.Hidden = true;
+
+                CurrentSong = new Song()
+                {
+                    UserId = user.Id,
+                    Title = song.song,
+                    Artist = song.artist
+                };
                 DateTimeOffset airDate;
                 DateTimeOffset.TryParse(song.airdate, out airDate);
                 CurrentSong.AirTime = airDate;
@@ -181,26 +241,6 @@ namespace KEXP
                 songInfo.Title = currentSongString;
                 titleBar.StringValue = currentSongString;
             });
-        }
-
-        private void Mute_Activated(object sender, EventArgs e)
-        {
-            MuteUnMute();
-        }
-
-        partial void btnRefresh_clicked(Foundation.NSObject nSObject)
-        {
-            webView.Reload();
-        }
-
-        partial void btnMute_clicked(Foundation.NSObject nSObject)
-        {
-            MuteUnMute();
-        }
-
-        partial void btnUnmute_clicked(NSObject sender)
-        {
-            MuteUnMute();
         }
 
         public void MuteUnMute()
@@ -223,6 +263,37 @@ namespace KEXP
                 btnMute.Hidden = true;
             }
         }
+
+        #region Event Handlers
+        private void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            GetCurrentSong();
+        }
+        partial void save_favorite(NSObject sender)
+        {
+            FavoriteOrNot(true);
+        }
+        partial void unsave_favorite(NSObject sender)
+        {
+            FavoriteOrNot(false);
+        }
+        private void Mute_Activated(object sender, EventArgs e)
+        {
+            MuteUnMute();
+        }
+        partial void btnRefresh_clicked(Foundation.NSObject nSObject)
+        {
+            webView.Reload();
+        }
+        partial void btnMute_clicked(Foundation.NSObject nSObject)
+        {
+            MuteUnMute();
+        }
+        partial void btnUnmute_clicked(NSObject sender)
+        {
+            MuteUnMute();
+        }
+        #endregion
 
         private string FormatSongForDisplay(Song song)
         {

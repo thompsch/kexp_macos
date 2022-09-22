@@ -140,7 +140,7 @@
                                 </textFieldCell>
                             </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwS-3M-A9X" userLabel="btnMute">
-                                <rect key="frame" x="49" y="238" width="32" height="32"/>
+                                <rect key="frame" x="48" y="238" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Unmuted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="3YL-oS-qhL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -172,7 +172,7 @@
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0sV-30-sm3" userLabel="btnUnmute">
-                                <rect key="frame" x="49" y="238" width="32" height="32"/>
+                                <rect key="frame" x="48" y="238" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Muted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="NgM-q8-zg7">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -180,6 +180,28 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="btnUnmute_clicked:" target="XfG-lQ-9wD" id="TJX-Jo-L8u"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WkR-iJ-5d0" userLabel="btnUnsaveFavorite">
+                                <rect key="frame" x="442" y="238" width="38" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="favorite_filled" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="EwX-3i-lwU">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="unsaveFavorite:" target="XfG-lQ-9wD" id="NuU-NK-03R"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H3R-4a-mbC" userLabel="btnSaveFavorite">
+                                <rect key="frame" x="441" y="238" width="40" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="favorite_empty" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TLG-Ix-bZX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="save_favorite:" target="XfG-lQ-9wD" id="cya-Kz-Rfv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -198,7 +220,11 @@
                     <connections>
                         <outlet property="btnMute" destination="kwS-3M-A9X" id="cZA-UW-QTu"/>
                         <outlet property="btnRefresh" destination="2In-Dr-tg6" id="ruO-BA-DV7"/>
+                        <outlet property="btnSaveFavorite" destination="H3R-4a-mbC" id="noe-Pj-WGz"/>
                         <outlet property="btnUnmute" destination="0sV-30-sm3" id="lB6-Sj-ldX"/>
+                        <outlet property="btnUnsaveFavorite" destination="WkR-iJ-5d0" id="QeF-0Q-q6D"/>
+                        <outlet property="heart_open" destination="WkR-iJ-5d0" id="Ncq-tS-xlL"/>
+                        <outlet property="heart_red" destination="H3R-4a-mbC" id="7B0-wd-tQJ"/>
                         <outlet property="titleBar" destination="HvE-bh-Stm" id="vgQ-h1-1UT"/>
                         <outlet property="webView" destination="xK1-4M-VyQ" id="YAv-Bt-tnp"/>
                     </connections>
@@ -211,6 +237,8 @@
     <resources>
         <image name="Muted" width="48" height="48"/>
         <image name="Unmuted" width="128" height="128"/>
+        <image name="favorite_empty" width="24" height="24"/>
+        <image name="favorite_filled" width="24" height="24"/>
         <image name="refresh" width="32" height="32"/>
     </resources>
 </document>
