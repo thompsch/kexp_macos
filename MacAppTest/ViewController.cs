@@ -11,6 +11,10 @@ using Foundation;
 using SceneKit;
 using WebKit;
 using Xamarin.Forms;
+using Realms;
+using Realms.Sync;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace KEXP
 {
@@ -21,8 +25,12 @@ namespace KEXP
         NSStatusBar statusBar;
         NSMenuItem mute;
         NSMenuItem songInfo;
+        NSMenuItem recentMenu;
 
-        string currentSong = "Looking...";
+        Realm realm;
+
+        Song CurrentSong;
+        string currentSongString = "Loading...";
 
         public override NSObject RepresentedObject
         {
@@ -41,18 +49,55 @@ namespace KEXP
 
         }
 
-        public override void ViewDidLoad()
+        public async override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+
+            // REALM
+
+
+            var app = App.Create("kexpsongs-pnevf");
+            User user = await app.LogInAsync(
+                Credentials.ApiKey("rCpFIckLbKhL83IcOebQLv8KBfK9LCn0gBaAQDEWK0bkFA6RwwkbD8AKnPwZ7qCv"));
+
+            var config = new FlexibleSyncConfiguration(app.CurrentUser)
+            {
+                PopulateInitialSubscriptions = (realm) =>
+                {
+                    var mySongs = realm.All<Song>().Where(n => n.UserId == user.Id);
+                    realm.Subscriptions.Add(mySongs);
+                }
+            };
+
+            realm = await Realm.GetInstanceAsync(config);
+
+            // END REALM
+
+            CurrentSong = new Song();
+            CurrentSong.UserId = user.Id;
 
             var url = new NSUrl("https://kexp.org");
             var request = new NSUrlRequest(url);
             webView.LoadRequest(request);
 
+            SetUpStatusMenu();
+
+
+            Timer timer = new Timer(10000);
+            timer.Elapsed += Timer_Elapsed;
+            timer.AutoReset = true;
+            timer.Enabled = true;
+        }
+
+        private void SetUpStatusMenu()
+        {
             statusBar = NSStatusBar.SystemStatusBar;
 
-            item = statusBar.CreateStatusItem(NSStatusItemLength.Variable);
-            item.Title = "KEXP";
+            item = statusBar.CreateStatusItem(NSStatusItemLength.Square);
+            item.Image = NSImage.ImageNamed("menu_icon");
+            item.Image.Size = new CoreGraphics.CGSize(18.0, 18.0);
+            item.Image.Template = false;
             item.HighlightMode = true;
             item.Menu = new NSMenu();
 
@@ -61,18 +106,54 @@ namespace KEXP
             item.Menu.AddItem(mute);
             btnUnmute.Hidden = true;
 
-            songInfo = new NSMenuItem(currentSong);
+            songInfo = new NSMenuItem(currentSongString);
             songInfo.Enabled = true;
+            songInfo.Submenu = new NSMenu();
+
+            var remember = new NSMenuItem("Remember this song");
+            remember.Activated += Remember_Activated;
+            songInfo.Submenu.AddItem(remember);
             item.Menu.AddItem(songInfo);
 
-            Timer_Elapsed(null, null);
-
-            Timer timer = new Timer(10000);
-            timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = true;
-            timer.Enabled = true;
+            recentMenu = new NSMenuItem("Recently Saved Songs");
+            //recentMenu.Activated += Recent_Activated;
+            recentMenu.Submenu = new NSMenu();
+            UpdateRecentList();
+            item.Menu.AddItem(recentMenu);
         }
 
+        private void UpdateRecentList()
+        {
+            //clear existing list
+            recentMenu.Submenu = new NSMenu();
+
+            var recentsongs = realm.All<Song>()
+                .OrderByDescending(s => s.AirTime)
+                .ToList();
+
+            for (int i = 0; i < recentsongs.Count; i++)
+            {
+                if (i > 9) return;
+
+                Song s = recentsongs[i];
+                recentMenu.Submenu.AddItem(new NSMenuItem(FormatSongForDisplay(s)));
+            }
+        }
+
+        private void Remember_Activated(object sender, EventArgs e)
+        {
+            if (CurrentSong.Title == null)
+            {
+                return;
+            }
+
+            realm.Write(() =>
+            {
+                realm.Add<Song>(CurrentSong);
+            });
+
+            UpdateRecentList();
+        }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -85,14 +166,20 @@ namespace KEXP
             {
                 var reader = new StreamReader(stream);
                 var body = reader.ReadToEnd();
-                var jd = JsonSerializer.Deserialize<Song>(body);
-                currentSong = $"{jd.results[0].artist} - {jd.results[0].song}";
+                var jd = JsonSerializer.Deserialize<JsonSong>(body);
+                var song = jd.results[0];
+
+                CurrentSong.Title = song.song;
+                CurrentSong.Artist = song.artist;
+                DateTimeOffset airDate;
+                DateTimeOffset.TryParse(song.airdate, out airDate);
+                CurrentSong.AirTime = airDate;
+                currentSongString = FormatSongForDisplay(CurrentSong);
             }
             InvokeOnMainThread(() =>
             {
-                songInfo.Title = currentSong;
-
-                titleBar.StringValue = currentSong;
+                songInfo.Title = currentSongString;
+                titleBar.StringValue = currentSongString;
             });
         }
 
@@ -136,18 +223,23 @@ namespace KEXP
                 btnMute.Hidden = true;
             }
         }
+
+        private string FormatSongForDisplay(Song song)
+        {
+            return $"{song.Artist} - {song.Title}";
+        }
     }
 
-    public class Song
+    public class JsonSong
     {
-        public List<SongResults> results { get; set; }
-
-        public Song() { this.results = new List<SongResults>(); }
+        public List<JsonSongResults> results { get; set; }
+        public JsonSong() { this.results = new List<JsonSongResults>(); }
     }
 
-    public class SongResults
+    public class JsonSongResults
     {
         public string song { get; set; }
         public string artist { get; set; }
+        public string airdate { get; set; }
     }
 }
