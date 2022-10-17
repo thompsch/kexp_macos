@@ -74,7 +74,7 @@ namespace KEXP
             SetUpStatusMenu();
             GetCurrentSong();
 
-            Timer timer = new Timer(10000);
+            Timer timer = new Timer(5000);
             timer.Elapsed += timer_Elapsed;
             timer.AutoReset = true;
             timer.Enabled = true;
@@ -218,12 +218,6 @@ namespace KEXP
                     };
                 }
 
-                if (CurrentSong.Title == song.song && CurrentSong.Artist == song.artist)
-                {
-                    return;
-                }
-                btnSaveFavorite.Hidden = false;
-                btnUnsaveFavorite.Hidden = true;
 
                 CurrentSong = new Song()
                 {
@@ -238,6 +232,8 @@ namespace KEXP
             }
             InvokeOnMainThread(() =>
             {
+                btnSaveFavorite.Hidden = false;
+                btnUnsaveFavorite.Hidden = true;
                 songInfo.Title = currentSongString;
                 titleBar.StringValue = currentSongString;
             });
