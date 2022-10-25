@@ -123,6 +123,7 @@
 		<ImageAsset Include="Assets.xcassets\favorite_filled.imageset\star_yellow.png" />
 		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\Contents.json" />
 		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\star_open.png" />
+		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\.DS_Store" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Resources\" />
@@ -131,6 +132,7 @@
 		<None Include="Info.plist" />
 		<None Include="Entitlements.plist" />
 		<None Include="packages.config" />
+		<None Include=".DS_Store" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="Main.cs" />
@@ -140,6 +142,7 @@
 			<DependentUpon>ViewController.cs</DependentUpon>
 		</Compile>
 		<Compile Include="Song.cs" />
+		<Compile Include="WebViewDelegate.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<InterfaceDefinition Include="Main.storyboard" />

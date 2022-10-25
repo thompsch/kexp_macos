@@ -71,6 +71,7 @@ namespace KEXP
             var request = new NSUrlRequest(url);
             webView.LoadRequest(request);
 
+            webView.NavigationDelegate = new WebViewDelegate();
             SetUpStatusMenu();
             GetCurrentSong();
 
@@ -79,6 +80,7 @@ namespace KEXP
             timer.AutoReset = true;
             timer.Enabled = true;
         }
+
 
         private async Task DoRealmStuff()
         {
@@ -113,7 +115,6 @@ namespace KEXP
             mute.Activated += Mute_Activated;
             item.Menu.AddItem(mute);
             btnUnmute.Hidden = true;
-
 
             songInfo = new NSMenuItem(currentSongString);
             songInfo.Enabled = true;
@@ -165,38 +166,46 @@ namespace KEXP
 
         private void FavoriteOrNot(bool save)
         {
+
             if (CurrentSong == null || CurrentSong.Title == null)
             {
                 return;
             }
+
+            var alreadyFavorite = realm.Find<Song>(CurrentSong.Id);
+
             if (save)
             {
-                realm.Write(() =>
+                if (alreadyFavorite == null)
                 {
-                    realm.Add<Song>(CurrentSong);
-                });
+                    CurrentSong.IsFavorite = true;
+                    realm.Write(() =>
+                    {
+                        realm.Add<Song>(CurrentSong);
+                    });
 
-                UpdateRecentList();
+                    UpdateRecentList();
+                }
                 btnSaveFavorite.Hidden = true;
                 btnUnsaveFavorite.Hidden = false;
             }
             else
             {
-                if (realm.Find<Song>(CurrentSong.Id) != null)
+                if (alreadyFavorite != null)
                 {
+                    CurrentSong.IsFavorite = false;
                     realm.Write(() =>
                     {
                         realm.Remove(CurrentSong);
                     });
                 }
+
                 UpdateRecentList();
                 GetCurrentSong();
                 btnSaveFavorite.Hidden = false;
                 btnUnsaveFavorite.Hidden = true;
             }
         }
-
-
 
         private void GetCurrentSong()
         {
@@ -218,7 +227,10 @@ namespace KEXP
                     };
                 }
 
-
+                if (CurrentSong.Title == song.song && CurrentSong.Artist == song.artist)
+                {
+                    return;
+                }
                 CurrentSong = new Song()
                 {
                     UserId = user.Id,
