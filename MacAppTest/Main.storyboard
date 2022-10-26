@@ -129,7 +129,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HvE-bh-Stm">
-                                <rect key="frame" x="0.0" y="336" width="388" height="32"/>
+                                <rect key="frame" x="0.0" y="332" width="388" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="cgs-Hg-mBw"/>
+                                </constraints>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" borderStyle="bezel" alignment="center" drawsBackground="YES" id="IxV-FT-E1N">
                                     <font key="font" metaFont="system" size="14"/>
                                     <color key="textColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -140,6 +143,8 @@
                                 <rect key="frame" x="34" y="334" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="bKB-30-TCu"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="32" id="ks0-cV-kYQ"/>
+                                    <constraint firstAttribute="height" constant="32" id="zOs-c9-OO8"/>
                                 </constraints>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Unmuted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="3YL-oS-qhL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -158,20 +163,6 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="btnRefresh_clicked:" target="XfG-lQ-9wD" id="SI4-Ss-iId"/>
-                                </connections>
-                            </button>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="0sV-30-sm3" userLabel="btnUnmute">
-                                <rect key="frame" x="34" y="334" width="32" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="FcL-yj-ZoY"/>
-                                    <constraint firstAttribute="width" constant="32" id="HWP-St-VVR"/>
-                                </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Muted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="NgM-q8-zg7">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="btnUnmute_clicked:" target="XfG-lQ-9wD" id="TJX-Jo-L8u"/>
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="WkR-iJ-5d0" userLabel="btnUnsaveFavorite">
@@ -209,10 +200,23 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="0sV-30-sm3" userLabel="btnUnmute">
+                                <rect key="frame" x="34" y="334" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="FcL-yj-ZoY"/>
+                                    <constraint firstAttribute="width" constant="32" id="HWP-St-VVR"/>
+                                </constraints>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Muted" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="NgM-q8-zg7">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="btnUnmute_clicked:" target="XfG-lQ-9wD" id="TJX-Jo-L8u"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="kwS-3M-A9X" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="2Qa-7m-oTB"/>
-                            <constraint firstItem="WkR-iJ-5d0" firstAttribute="bottom" secondItem="HvE-bh-Stm" secondAttribute="bottom" constant="2" id="2TX-ek-cam"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="7I2-Eh-svF"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="823-QM-RYu"/>
                             <constraint firstItem="WkR-iJ-5d0" firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="9f1-pt-Irr"/>
@@ -222,12 +226,9 @@
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Neg-9o-ZEG"/>
                             <constraint firstAttribute="bottom" secondItem="xK1-4M-VyQ" secondAttribute="bottom" id="Ocl-OO-okl"/>
                             <constraint firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="OzV-30-hzF"/>
-                            <constraint firstItem="H3R-4a-mbC" firstAttribute="bottom" secondItem="HvE-bh-Stm" secondAttribute="bottom" constant="2" id="PHt-L8-jVG"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="SSy-ax-TtO"/>
                             <constraint firstItem="xK1-4M-VyQ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="34" id="WIq-Zf-tWG"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="dCu-md-ipk"/>
-                            <constraint firstItem="kwS-3M-A9X" firstAttribute="bottom" secondItem="HvE-bh-Stm" secondAttribute="bottom" constant="2" id="dv0-bl-r7u"/>
-                            <constraint firstItem="0sV-30-sm3" firstAttribute="bottom" secondItem="HvE-bh-Stm" secondAttribute="bottom" constant="2" id="flI-WM-9Dr"/>
                             <constraint firstItem="xK1-4M-VyQ" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" id="g7s-rs-dms"/>
                             <constraint firstItem="0sV-30-sm3" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="gAM-x4-QKK"/>
                             <constraint firstItem="0sV-30-sm3" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" constant="34" id="gDX-NW-OE4"/>
@@ -235,7 +236,6 @@
                             <constraint firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="kPZ-XG-2AB"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="pxc-7h-Xd1"/>
                             <constraint firstItem="kwS-3M-A9X" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" constant="34" id="rnK-nC-FnE"/>
-                            <constraint firstItem="kwS-3M-A9X" firstAttribute="bottom" secondItem="HvE-bh-Stm" secondAttribute="bottom" constant="2" id="sb1-cW-AsG"/>
                             <constraint firstItem="kwS-3M-A9X" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="t3x-3S-Wcd"/>
                             <constraint firstItem="H3R-4a-mbC" firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="wLI-Bu-f8D"/>
                         </constraints>

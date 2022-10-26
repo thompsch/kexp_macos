@@ -29,7 +29,7 @@ namespace KEXP
         NSMenuItem manage;
 
         Realm realm;
-        User user;
+        App app;
 
         Song CurrentSong;
         string currentSongString = "Loading...";
@@ -52,6 +52,7 @@ namespace KEXP
         }
         public override void ViewDidDisappear()
         {
+            realm.Dispose();
             base.ViewDidDisappear();
             NSApplication.SharedApplication.Terminate(this);
         }
@@ -64,7 +65,7 @@ namespace KEXP
 
             CurrentSong = new Song()
             {
-                UserId = user.Id
+                UserId = app.CurrentUser.Id
             };
 
             var url = new NSUrl("https://kexp.org");
@@ -84,15 +85,19 @@ namespace KEXP
 
         private async Task DoRealmStuff()
         {
-            var app = App.Create("kexpsongs-pnevf");
-            user = await app.LogInAsync(
+            app = App.Create("kexpsongs-pnevf");
+
+            if (app.CurrentUser == null)
+            {
+                await app.LogInAsync(
                 Credentials.ApiKey("rCpFIckLbKhL83IcOebQLv8KBfK9LCn0gBaAQDEWK0bkFA6RwwkbD8AKnPwZ7qCv"));
 
+            }
             var config = new FlexibleSyncConfiguration(app.CurrentUser)
             {
                 PopulateInitialSubscriptions = (realm) =>
                 {
-                    var mySongs = realm.All<Song>().Where(n => n.UserId == user.Id);
+                    var mySongs = realm.All<Song>().Where(n => n.UserId == app.CurrentUser.Id);
                     realm.Subscriptions.Add(mySongs);
                 }
             };
@@ -166,7 +171,6 @@ namespace KEXP
 
         private void FavoriteOrNot(bool save)
         {
-
             if (CurrentSong == null || CurrentSong.Title == null)
             {
                 return;
@@ -174,18 +178,15 @@ namespace KEXP
 
             var alreadyFavorite = realm.Find<Song>(CurrentSong.Id);
 
-            if (save)
+            if (save && alreadyFavorite == null)
             {
-                if (alreadyFavorite == null)
+                realm.Write(() =>
                 {
-                    CurrentSong.IsFavorite = true;
-                    realm.Write(() =>
-                    {
-                        realm.Add<Song>(CurrentSong);
-                    });
+                    realm.Add<Song>(CurrentSong);
+                });
 
-                    UpdateRecentList();
-                }
+                UpdateRecentList();
+
                 btnSaveFavorite.Hidden = true;
                 btnUnsaveFavorite.Hidden = false;
             }
@@ -193,22 +194,44 @@ namespace KEXP
             {
                 if (alreadyFavorite != null)
                 {
-                    CurrentSong.IsFavorite = false;
                     realm.Write(() =>
                     {
                         realm.Remove(CurrentSong);
                     });
-                }
 
-                UpdateRecentList();
-                GetCurrentSong();
-                btnSaveFavorite.Hidden = false;
-                btnUnsaveFavorite.Hidden = true;
+                    UpdateRecentList();
+                    GetCurrentSong();
+                    btnSaveFavorite.Hidden = false;
+                    btnUnsaveFavorite.Hidden = true;
+                }
             }
         }
 
         private void GetCurrentSong()
         {
+            /* Useful if we want to save roundtrip calls 
+             * cuyrrently, however, it is fetching the album name
+             * we want to get song_title, but that has been formatted 
+             * for website view and needs to string manipulated.
+             * 
+            // check page's album name to see if it has changed
+            WKJavascriptEvaluationResult handler = (NSObject result, NSError err) =>
+            {
+                if (err != null)
+                {
+                    System.Console.WriteLine(err);
+                }
+                if (result != null)
+                {
+                    System.Console.WriteLine(result);
+                    if (result.ToString() == CurrentSong.Title) { }
+                }
+            };
+
+            webView.EvaluateJavaScript("document.getElementsByClassName('Player-album')[0].textContent",
+                handler);
+
+            */
             var request = WebRequest.CreateHttp("https://api.kexp.org/v2/plays/?limit=1");
             request.ContentType = "application/json";
             var response = request.GetResponse();
@@ -219,36 +242,36 @@ namespace KEXP
                 var body = reader.ReadToEnd();
                 var jd = JsonSerializer.Deserialize<JsonSong>(body);
                 var song = jd.results[0];
-                if (!CurrentSong.IsValid)
+                InvokeOnMainThread(() =>
                 {
-                    CurrentSong = new Song()
+                    if (!CurrentSong.IsValid)
                     {
-                        UserId = user.Id,
-                    };
-                }
+                        CurrentSong = new Song()
+                        {
+                            UserId = app.CurrentUser.Id,
+                        };
+                    }
 
-                if (CurrentSong.Title == song.song && CurrentSong.Artist == song.artist)
-                {
-                    return;
-                }
-                CurrentSong = new Song()
-                {
-                    UserId = user.Id,
-                    Title = song.song,
-                    Artist = song.artist
-                };
-                DateTimeOffset airDate;
-                DateTimeOffset.TryParse(song.airdate, out airDate);
-                CurrentSong.AirTime = airDate;
-                currentSongString = FormatSongForDisplay(CurrentSong);
+                    if (CurrentSong != null && CurrentSong.Title != song.song)
+                    {
+                        CurrentSong = new Song()
+                        {
+                            UserId = app.CurrentUser.Id,
+                            Title = song.song,
+                            Artist = song.artist,
+                        };
+                        DateTimeOffset airDate;
+                        DateTimeOffset.TryParse(song.airdate, out airDate);
+                        CurrentSong.AirTime = airDate;
+                        currentSongString = FormatSongForDisplay(CurrentSong);
+
+                        btnSaveFavorite.Hidden = false;
+                        btnUnsaveFavorite.Hidden = true;
+                        songInfo.Title = currentSongString;
+                        titleBar.StringValue = currentSongString;
+                    }
+                });
             }
-            InvokeOnMainThread(() =>
-            {
-                btnSaveFavorite.Hidden = false;
-                btnUnsaveFavorite.Hidden = true;
-                songInfo.Title = currentSongString;
-                titleBar.StringValue = currentSongString;
-            });
         }
 
         public void MuteUnMute()
@@ -307,18 +330,5 @@ namespace KEXP
         {
             return $"{song.Artist} - {song.Title}";
         }
-    }
-
-    public class JsonSong
-    {
-        public List<JsonSongResults> results { get; set; }
-        public JsonSong() { this.results = new List<JsonSongResults>(); }
-    }
-
-    public class JsonSongResults
-    {
-        public string song { get; set; }
-        public string artist { get; set; }
-        public string airdate { get; set; }
     }
 }

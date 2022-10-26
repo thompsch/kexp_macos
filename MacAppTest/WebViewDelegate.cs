@@ -9,9 +9,13 @@ namespace KEXP
         {
         }
 
-        public override void DidFinishNavigation(WKWebView webView, WKNavigation navigation) => webView.CallAsyncJavaScript
+        public override void DidFinishNavigation(
+            WKWebView webView, WKNavigation navigation)
+        {
+            webView.CallAsyncJavaScript
                            ($"document.getElementsByClassName('Player-ctaHeadline')[0].click();",
                            null, null, WKContentWorld.DefaultClient, null);
+        }
 
     }
 }

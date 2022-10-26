@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Realm.10.15.1\build\xamarinmac\Realm.props" Condition="Exists('..\packages\Realm.10.15.1\build\xamarinmac\Realm.props')" />
-  <Import Project="..\packages\Realm.Fody.10.15.1\build\Realm.Fody.props" Condition="Exists('..\packages\Realm.Fody.10.15.1\build\Realm.Fody.props')" />
+  <Import Project="..\packages\Realm.10.17.0\build\xamarinmac\Realm.props" Condition="Exists('..\packages\Realm.10.17.0\build\xamarinmac\Realm.props')" />
+  <Import Project="..\packages\Realm.Fody.10.17.0\build\Realm.Fody.props" Condition="Exists('..\packages\Realm.Fody.10.17.0\build\Realm.Fody.props')" />
 	<Import Project="..\packages\Xamarin.Forms.5.0.0.2515\build\Xamarin.Forms.props" Condition="Exists('..\packages\Xamarin.Forms.5.0.0.2515\build\Xamarin.Forms.props')" />
 	<PropertyGroup>
 		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -89,13 +89,13 @@
 		</Reference>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="MongoDB.Bson">
-		  <HintPath>..\packages\MongoDB.Bson.2.17.1\lib\netstandard2.1\MongoDB.Bson.dll</HintPath>
+		  <HintPath>..\packages\MongoDB.Bson.2.18.0\lib\netstandard2.1\MongoDB.Bson.dll</HintPath>
 		</Reference>
 		<Reference Include="Remotion.Linq">
 		  <HintPath>..\packages\Remotion.Linq.2.2.0\lib\portable-net45+win+wpa81+wp80\Remotion.Linq.dll</HintPath>
 		</Reference>
 		<Reference Include="Realm">
-		  <HintPath>..\packages\Realm.10.15.1\lib\netstandard2.0\Realm.dll</HintPath>
+		  <HintPath>..\packages\Realm.10.17.0\lib\netstandard2.0\Realm.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
@@ -143,6 +143,7 @@
 		</Compile>
 		<Compile Include="Song.cs" />
 		<Compile Include="WebViewDelegate.cs" />
+		<Compile Include="JsonSong.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<InterfaceDefinition Include="Main.storyboard" />
@@ -150,5 +151,5 @@
 	<Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 	<Import Project="..\packages\Xamarin.Forms.5.0.0.2515\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.5.0.0.2515\build\Xamarin.Forms.targets')" />
 	<Import Project="..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets')" />
-	<Import Project="..\packages\Fody.6.6.3\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.3\build\Fody.targets')" />
+	<Import Project="..\packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.4\build\Fody.targets')" />
 </Project>
