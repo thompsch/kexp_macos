@@ -125,22 +125,22 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="388" height="368"/>
+                        <rect key="frame" x="0.0" y="0.0" width="498" height="118"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HvE-bh-Stm">
-                                <rect key="frame" x="0.0" y="332" width="388" height="36"/>
+                                <rect key="frame" x="0.0" y="82" width="498" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="cgs-Hg-mBw"/>
                                 </constraints>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" borderStyle="bezel" alignment="center" drawsBackground="YES" id="IxV-FT-E1N">
-                                    <font key="font" metaFont="system" size="14"/>
-                                    <color key="textColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
+                                    <font key="font" size="16" name="Verdana"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.33005765032014917" green="0.36712590412762763" blue="0.40945151417525771" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </textFieldCell>
                             </textField>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="kwS-3M-A9X" userLabel="btnMute">
-                                <rect key="frame" x="34" y="334" width="32" height="32"/>
+                                <rect key="frame" x="48" y="84" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="bKB-30-TCu"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="32" id="ks0-cV-kYQ"/>
@@ -154,9 +154,8 @@
                                     <action selector="btnMute_clicked:" target="XfG-lQ-9wD" id="LHX-bG-kAu"/>
                                 </connections>
                             </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2In-Dr-tg6" userLabel="btnRefresh">
-                                <rect key="frame" x="2" y="334" width="32" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="2In-Dr-tg6" userLabel="btnRefresh">
+                                <rect key="frame" x="10" y="84" width="32" height="32"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="refresh" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Bzf-Zo-YTJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -166,7 +165,7 @@
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="WkR-iJ-5d0" userLabel="btnUnsaveFavorite">
-                                <rect key="frame" x="356" y="334" width="32" height="32"/>
+                                <rect key="frame" x="456" y="84" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="cGJ-G6-alg"/>
                                     <constraint firstAttribute="width" constant="32" id="nHp-wF-6Vd"/>
@@ -179,29 +178,15 @@
                                     <action selector="unsaveFavorite:" target="XfG-lQ-9wD" id="NuU-NK-03R"/>
                                 </connections>
                             </button>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="H3R-4a-mbC" userLabel="btnSaveFavorite">
-                                <rect key="frame" x="356" y="334" width="32" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="WWq-DU-nUV"/>
-                                    <constraint firstAttribute="width" constant="32" id="srw-NB-7hd"/>
-                                </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="favorite_empty" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TLG-Ix-bZX">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="save_favorite:" target="XfG-lQ-9wD" id="cya-Kz-Rfv"/>
-                                </connections>
-                            </button>
                             <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xK1-4M-VyQ" userLabel="webView">
-                                <rect key="frame" x="0.0" y="0.0" width="388" height="334"/>
+                                <rect key="frame" x="0.0" y="0.0" width="498" height="84"/>
                                 <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" audio="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="0sV-30-sm3" userLabel="btnUnmute">
-                                <rect key="frame" x="34" y="334" width="32" height="32"/>
+                                <rect key="frame" x="48" y="84" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="FcL-yj-ZoY"/>
                                     <constraint firstAttribute="width" constant="32" id="HWP-St-VVR"/>
@@ -214,12 +199,28 @@
                                     <action selector="btnUnmute_clicked:" target="XfG-lQ-9wD" id="TJX-Jo-L8u"/>
                                 </connections>
                             </button>
+                            <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H3R-4a-mbC" userLabel="btnSaveFavorite">
+                                <rect key="frame" x="466" y="84" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="WWq-DU-nUV"/>
+                                    <constraint firstAttribute="width" constant="32" id="srw-NB-7hd"/>
+                                </constraints>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="favorite_empty" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TLG-Ix-bZX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="save_favorite:" target="XfG-lQ-9wD" id="cya-Kz-Rfv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="kwS-3M-A9X" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="2Qa-7m-oTB"/>
+                            <constraint firstItem="HvE-bh-Stm" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="5Dw-ck-8b3"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="7I2-Eh-svF"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="823-QM-RYu"/>
-                            <constraint firstItem="WkR-iJ-5d0" firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="9f1-pt-Irr"/>
+                            <constraint firstItem="WkR-iJ-5d0" firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" constant="-10" id="9f1-pt-Irr"/>
+                            <constraint firstItem="H3R-4a-mbC" firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" constant="-10" id="9q6-VW-hhe"/>
                             <constraint firstItem="0sV-30-sm3" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="AFQ-c4-PK3"/>
                             <constraint firstItem="WkR-iJ-5d0" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="GTQ-GE-val"/>
                             <constraint firstItem="H3R-4a-mbC" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="K35-bc-4H0"/>
@@ -227,17 +228,19 @@
                             <constraint firstAttribute="bottom" secondItem="xK1-4M-VyQ" secondAttribute="bottom" id="Ocl-OO-okl"/>
                             <constraint firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="OzV-30-hzF"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="SSy-ax-TtO"/>
+                            <constraint firstItem="2In-Dr-tg6" firstAttribute="top" secondItem="kwS-3M-A9X" secondAttribute="top" id="Tga-O7-uJC"/>
                             <constraint firstItem="xK1-4M-VyQ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="34" id="WIq-Zf-tWG"/>
+                            <constraint firstItem="HvE-bh-Stm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="acs-RU-hBz"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="dCu-md-ipk"/>
                             <constraint firstItem="xK1-4M-VyQ" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" id="g7s-rs-dms"/>
                             <constraint firstItem="0sV-30-sm3" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="gAM-x4-QKK"/>
-                            <constraint firstItem="0sV-30-sm3" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" constant="34" id="gDX-NW-OE4"/>
+                            <constraint firstItem="0sV-30-sm3" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" constant="48" id="gDX-NW-OE4"/>
                             <constraint firstAttribute="trailing" secondItem="xK1-4M-VyQ" secondAttribute="trailing" id="hdz-Ep-CnL"/>
                             <constraint firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="kPZ-XG-2AB"/>
                             <constraint firstItem="HvE-bh-Stm" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="pxc-7h-Xd1"/>
-                            <constraint firstItem="kwS-3M-A9X" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" constant="34" id="rnK-nC-FnE"/>
+                            <constraint firstItem="kwS-3M-A9X" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" constant="48" id="rnK-nC-FnE"/>
                             <constraint firstItem="kwS-3M-A9X" firstAttribute="top" secondItem="HvE-bh-Stm" secondAttribute="top" constant="2" id="t3x-3S-Wcd"/>
-                            <constraint firstItem="H3R-4a-mbC" firstAttribute="trailing" secondItem="HvE-bh-Stm" secondAttribute="trailing" id="wLI-Bu-f8D"/>
+                            <constraint firstItem="2In-Dr-tg6" firstAttribute="leading" secondItem="HvE-bh-Stm" secondAttribute="leading" constant="10" id="vXX-dk-NH8"/>
                         </constraints>
                     </view>
                     <connections>
@@ -254,7 +257,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7" y="693"/>
+            <point key="canvasLocation" x="48" y="568"/>
         </scene>
     </scenes>
     <resources>
