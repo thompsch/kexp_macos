@@ -9,17 +9,8 @@ using System.CodeDom.Compiler;
 
 namespace KEXP
 {
-	partial class AppDelegate
-	{
-		[Outlet]
-		AppKit.NSMenuItem infoMenu { get; set; }
-		
-		void ReleaseDesignerOutlets ()
-		{
-			if (infoMenu != null) {
-				infoMenu.Dispose ();
-				infoMenu = null;
-			}
-		}
-	}
+    partial class AppDelegate
+    {
+
+    }
 }

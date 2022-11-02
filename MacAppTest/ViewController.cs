@@ -130,6 +130,11 @@ namespace KEXP
 
             var remember = new NSMenuItem("Add to Favorites");
             remember.Activated += Remember_Activated;
+            //would be cool but isn't working (yet)
+            //remember.KeyEquivalent = "f";
+            //remember.KeyEquivalentModifierMask = NSEventModifierMask.CommandKeyMask;
+            //remember.AllowsKeyEquivalentWhenHidden = true;
+
             songInfo.Submenu.AddItem(remember);
             item.Menu.AddItem(songInfo);
 
