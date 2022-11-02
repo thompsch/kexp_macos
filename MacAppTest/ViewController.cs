@@ -23,6 +23,7 @@ namespace KEXP
         private int volume = 0;
         NSStatusItem item;
         NSStatusBar statusBar;
+        NSMenuItem infoMenu;
         NSMenuItem mute;
         NSMenuItem songInfo;
         NSMenuItem recentMenu;
@@ -125,6 +126,8 @@ namespace KEXP
             songInfo.Enabled = true;
             songInfo.Submenu = new NSMenu();
 
+            infoMenu = new NSMenuItem(currentSongString);
+
             var remember = new NSMenuItem("Add to Favorites");
             remember.Activated += Remember_Activated;
             songInfo.Submenu.AddItem(remember);
@@ -207,8 +210,9 @@ namespace KEXP
             }
         }
 
-        private void GetCurrentSong()
+        public void GetCurrentSong()
         {
+            infoMenu.Title = "OH YEAH";
             /* Useful if we want to save roundtrip calls 
              * cuyrrently, however, it is fetching the album name
              * we want to get song_title, but that has been formatted 
@@ -268,6 +272,7 @@ namespace KEXP
                         btnSaveFavorite.Hidden = false;
                         btnUnsaveFavorite.Hidden = true;
                         songInfo.Title = currentSongString;
+
                         titleBar.StringValue = currentSongString;
                     }
                 });
@@ -324,6 +329,7 @@ namespace KEXP
         {
             MuteUnMute();
         }
+
         #endregion
 
         private string FormatSongForDisplay(Song song)

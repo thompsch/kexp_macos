@@ -8,12 +8,11 @@ using Foundation;
 namespace KEXP
 {
     [Register("AppDelegate")]
-    public class AppDelegate : NSApplicationDelegate
+    public partial class AppDelegate : NSApplicationDelegate
     {
         private string songInfo;
         NSStatusItem item;
         NSStatusBar statusBar;
-
 
         public AppDelegate()
         {

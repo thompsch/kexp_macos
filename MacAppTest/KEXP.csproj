@@ -100,17 +100,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-16.png" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-16%402x.png" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-32.png" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-32%402x.png" />
 		<ImageAsset Include="Assets.xcassets\Contents.json" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon.png" />
 		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 5.png" />
 		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 4.png" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 3.png" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 2.png" />
-		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon 1.png" />
 		<ImageAsset Include="Assets.xcassets\Unmuted.imageset\Contents.json" />
 		<ImageAsset Include="Assets.xcassets\Muted.imageset\Contents.json" />
 		<ImageAsset Include="Assets.xcassets\refresh.imageset\Contents.json" />
@@ -124,6 +116,15 @@
 		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\Contents.json" />
 		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\star_open.png" />
 		<ImageAsset Include="Assets.xcassets\favorite_empty.imageset\.DS_Store" />
+		<ImageAsset Include="Assets.xcassets\.DS_Store" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_32 2.png" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_32 1.png" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_256.png" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_128.png" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_16.png" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_512.png" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_256 1.png" />
+		<ImageAsset Include="Assets.xcassets\AppIcon.appiconset\kexp_icon_64.png" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Resources\" />
@@ -144,6 +145,9 @@
 		<Compile Include="Song.cs" />
 		<Compile Include="WebViewDelegate.cs" />
 		<Compile Include="JsonSong.cs" />
+		<Compile Include="AppDelegate.designer.cs">
+		  <DependentUpon>AppDelegate.cs</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<InterfaceDefinition Include="Main.storyboard" />

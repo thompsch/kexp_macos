@@ -59,12 +59,6 @@ namespace KEXP
 
         void ReleaseDesignerOutlets()
         {
-            if (btnSaveFavorite != null)
-            {
-                btnSaveFavorite.Dispose();
-                btnSaveFavorite = null;
-            }
-
             if (btnMute != null)
             {
                 btnMute.Dispose();
@@ -77,16 +71,22 @@ namespace KEXP
                 btnRefresh = null;
             }
 
-            if (btnUnsaveFavorite != null)
+            if (btnSaveFavorite != null)
             {
-                btnUnsaveFavorite.Dispose();
-                btnUnsaveFavorite = null;
+                btnSaveFavorite.Dispose();
+                btnSaveFavorite = null;
             }
 
             if (btnUnmute != null)
             {
                 btnUnmute.Dispose();
                 btnUnmute = null;
+            }
+
+            if (btnUnsaveFavorite != null)
+            {
+                btnUnsaveFavorite.Dispose();
+                btnUnsaveFavorite = null;
             }
 
             if (titleBar != null)
