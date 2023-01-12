@@ -148,6 +148,7 @@
 		<Compile Include="AppDelegate.designer.cs">
 		  <DependentUpon>AppDelegate.cs</DependentUpon>
 		</Compile>
+		<Compile Include="Deezer.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<InterfaceDefinition Include="Main.storyboard" />

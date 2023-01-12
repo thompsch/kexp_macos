@@ -7,9 +7,9 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.ca13b.kexp</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.2</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>12.3</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>2022 CA13B.COM</string>
+	<string>2023 CA13B.COM</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSMainStoryboardFile</key>

@@ -62,7 +62,14 @@ namespace KEXP
             base.ViewDidLoad();
             btnUnsaveFavorite.Hidden = true;
 
-            await DoRealmStuff();
+            try
+            {
+                await DoRealmStuff();
+            }
+            catch (Exception rex)
+            {
+
+            }
 
             CurrentSong = new Song()
             {
@@ -92,17 +99,9 @@ namespace KEXP
             {
                 await app.LogInAsync(
                 Credentials.ApiKey("rCpFIckLbKhL83IcOebQLv8KBfK9LCn0gBaAQDEWK0bkFA6RwwkbD8AKnPwZ7qCv"));
-
             }
-            var config = new FlexibleSyncConfiguration(app.CurrentUser)
-            {
-                PopulateInitialSubscriptions = (realm) =>
-                {
-                    var mySongs = realm.All<Song>().Where(n => n.UserId == app.CurrentUser.Id);
-                    realm.Subscriptions.Add(mySongs);
-                }
-            };
 
+            var config = new FlexibleSyncConfiguration(app.CurrentUser);
             realm = await Realm.GetInstanceAsync(config);
         }
 
@@ -150,7 +149,7 @@ namespace KEXP
 
         private void Manage_Activated(object sender, EventArgs e)
         {
-            //TODO: new UI????
+            //TODO: new UI or eredirect to web page (ugh)
             // throw new NotImplementedException();
         }
 
