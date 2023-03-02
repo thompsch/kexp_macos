@@ -15,6 +15,7 @@ using Realms;
 using Realms.Sync;
 using System.Linq;
 using System.Threading.Tasks;
+using CloudKit;
 
 namespace KEXP
 {
@@ -53,28 +54,30 @@ namespace KEXP
         }
         public override void ViewDidDisappear()
         {
-            realm.Dispose();
+            //realm.Dispose();
             base.ViewDidDisappear();
             NSApplication.SharedApplication.Terminate(this);
         }
-        public async override void ViewDidLoad()
+        public override void ViewDidLoad()
         {
             base.ViewDidLoad();
             btnUnsaveFavorite.Hidden = true;
 
             try
             {
-                await DoRealmStuff();
+                //TODO: add logon abilities and then re-implelent this. Doesn't
+                //make sense without a user account.
+                //DoRealmStuff();
             }
             catch (Exception rex)
             {
 
             }
 
-            CurrentSong = new Song()
-            {
-                UserId = app.CurrentUser.Id
-            };
+            /* CurrentSong = new Song()
+             {
+                 UserId = app.CurrentUser.Id
+             };*/
 
             var url = new NSUrl("https://kexp.org");
             var request = new NSUrlRequest(url);
@@ -91,18 +94,34 @@ namespace KEXP
         }
 
 
-        private async Task DoRealmStuff()
+        private void DoRealmStuff()
         {
             app = App.Create("kexpsongs-pnevf");
 
             if (app.CurrentUser == null)
             {
-                await app.LogInAsync(
-                Credentials.ApiKey("rCpFIckLbKhL83IcOebQLv8KBfK9LCn0gBaAQDEWK0bkFA6RwwkbD8AKnPwZ7qCv"));
+                app.LogInAsync(Credentials.ApiKey("rCpFIckLbKhL83IcOebQLv8KBfK9LCn0gBaAQDEWK0bkFA6RwwkbD8AKnPwZ7qCv"));
             }
 
-            var config = new FlexibleSyncConfiguration(app.CurrentUser);
-            realm = await Realm.GetInstanceAsync(config);
+            if (realm == null)
+            {
+                var config = new FlexibleSyncConfiguration(app.CurrentUser)
+                {
+                    PopulateInitialSubscriptions = (realm) =>
+                    {
+                        realm.Subscriptions.Add(
+                            realm.All<Song>().Where(s => s.UserId == app.CurrentUser.Id),
+                            new SubscriptionOptions { Name = "mySongs" });
+                    }
+                };
+
+                realm = Realm.GetInstance(config);
+
+                if (realm.SyncSession.ConnectionState != ConnectionState.Disconnected)
+                {
+                    realm.Subscriptions.WaitForSynchronizationAsync();
+                }
+            }
         }
 
         private void SetUpStatusMenu()
@@ -143,7 +162,7 @@ namespace KEXP
             manage.Activated += Manage_Activated;
             recentMenu.Submenu.AddItem(manage);
 
-            UpdateRecentList();
+            //UpdateRecentList();
             item.Menu.AddItem(recentMenu);
         }
 
@@ -192,7 +211,7 @@ namespace KEXP
                     realm.Add<Song>(CurrentSong);
                 });
 
-                UpdateRecentList();
+                //  UpdateRecentList();
 
                 btnSaveFavorite.Hidden = true;
                 btnUnsaveFavorite.Hidden = false;
@@ -206,7 +225,7 @@ namespace KEXP
                         realm.Remove(CurrentSong);
                     });
 
-                    UpdateRecentList();
+                    //    UpdateRecentList();
                     GetCurrentSong();
                     btnSaveFavorite.Hidden = false;
                     btnUnsaveFavorite.Hidden = true;
@@ -216,7 +235,7 @@ namespace KEXP
 
         public void GetCurrentSong()
         {
-            infoMenu.Title = "OH YEAH";
+            //infoMenu.Title = "OH YEAH";
             /* Useful if we want to save roundtrip calls 
              * cuyrrently, however, it is fetching the album name
              * we want to get song_title, but that has been formatted 
@@ -252,11 +271,11 @@ namespace KEXP
                 var song = jd.results[0];
                 InvokeOnMainThread(() =>
                 {
-                    if (!CurrentSong.IsValid)
+                    if (CurrentSong == null || !CurrentSong.IsValid)
                     {
                         CurrentSong = new Song()
                         {
-                            UserId = app.CurrentUser.Id,
+                            //UserId = app.CurrentUser.Id,
                         };
                     }
 
@@ -264,7 +283,7 @@ namespace KEXP
                     {
                         CurrentSong = new Song()
                         {
-                            UserId = app.CurrentUser.Id,
+                            //UserId = app.CurrentUser.Id,
                             Title = song.song,
                             Artist = song.artist,
                         };
